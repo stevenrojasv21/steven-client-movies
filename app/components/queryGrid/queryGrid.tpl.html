@@ -1,0 +1,87 @@
+<div class="container"> 
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2"> 
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <select ng-model="searchType" id="searchType" name="searchType">
+                        <option value="any" selected>Any</option>
+                        <option value="actor">Actor</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                </div>
+                <input type="text" ng-keypress="($event.which === 13)?search():0;" ng-model="searchProduct" id="search" name="search" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="search();">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </span>
+            </div>
+        </div>    
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <br>
+        </div>
+    </div>
+    <div ng-if="results" class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Results for query</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="flex-row row">
+                        <div class="col-xs-6 col-sm-4 col-lg-3" ng-repeat="result in results">
+                            <div class="thumbnail ">
+                                    <img ng-src="https://image.tmdb.org/t/p/w500{{result.image_path}}">
+                                <div class="caption">
+                                    <h3>{{result.name}}</h3>
+                                    <p class="flex-text text-muted">
+                                        {{result.overview}}
+                                    </p>
+                                    <p>
+                                        <a ng-disabled="result.media_type === 'tv'" class="btn btn-primary" ng-href="#!/{{route+result.media_type+'/'+result.id}}">More</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>          
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Popular movies -->
+    <!--<div ng-if="!results" class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Populars movies</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="flex-row row">
+                        <div class="col-xs-6 col-sm-4 col-lg-3" ng-repeat="result in results">
+                            <div class="thumbnail ">
+                                    <img ng-src="https://image.tmdb.org/t/p/w500{{result.image_path}}">
+                                <div class="caption">
+                                    <h3>{{result.name}}</h3>
+                                    <p class="flex-text text-muted">
+                                        {{result.overview}}
+                                    </p>
+                                    <p>
+                                        <a ng-disabled="result.media_type === 'tv'" class="btn btn-primary" ng-href="#!/{{result.media_type+'/'+result.id}}">More</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>          
+                </div>
+                <div class="panel-footer">
+                    Panel footer
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>    

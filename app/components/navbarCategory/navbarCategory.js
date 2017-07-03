@@ -1,4 +1,4 @@
-shopping
+mymovies
 /*.config(function ($stateProvider) {
     
     $stateProvider
@@ -17,9 +17,9 @@ shopping
     
     }
 )*/
-.controller("NavbarCategoryCtrl", ['$scope','$http', '$q', '$location', "ProductService", NavbarCategoryCtrl]);
+.controller("NavbarCategoryCtrl", ['$scope','$http', '$q', '$location', "MultiService", NavbarCategoryCtrl]);
 
-function NavbarCategoryCtrl($scope, $http, $q, $location, ProductService)
+function NavbarCategoryCtrl($scope, $http, $q, $location, MultiService)
 {
     $scope.items = [
     {

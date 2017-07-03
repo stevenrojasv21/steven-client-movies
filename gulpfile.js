@@ -10,6 +10,7 @@ var concat = require('gulp-concat'); // Join all JS files together to save space
 var stripDebug = require('gulp-strip-debug'); // Remove debugging stuffs
 var uglify = require('gulp-uglify'); // Minify JavaScript
 var imagemin = require('gulp-imagemin'); // Minify images
+var ngannotate = require('gulp-ng-annotate'); //Concat .js
 
 // Other dependencies
 var size = require('gulp-size'); // Get the size of the project
@@ -45,12 +46,17 @@ gulp.task('html', function() {
 gulp.task('scripts', function() {
   gulp.src(
         [
-            './app/componets/*.js', 
-            './app/componets/*.js',
+            './app/componets/app.js', 
+            './app/componets/model.js', 
             './app/components/**/*.js'
         ]
     )
     .pipe(concat('script.js'))
+    .pipe(ngannotate({
+            // true helps add where @ngInject is not used. It infers.
+            // Doesn't work with resolve, so we must be explicit there
+            add: true
+    }))
     .pipe(stripDebug())
     .pipe(uglify())
     .pipe(gulp.dest('./dist/scripts/'));

@@ -1,18 +1,15 @@
-// Cambios de URL para direccionar las peticiones correctamente.
-var root = document.location.href.split('/app/#!/')[0]; //replace("/app/#!/","");
+var root = "http://api-movies.com/api/v1/";
 
-var shopping = angular.module('Shopping', ['ngRoute', 'ui.router', 'ngResource'])
-.constant("ROOT", root+"/api")
-.constant("APP_NAME", "Shopping App");
+var mymovies = angular.module('MyMovies', ['ngRoute', 'ui.router', 'ngResource'])
+.constant("ROOT", root)
+.constant("APP_NAME", "My Movie");
 
-shopping
+mymovies
 .config(function ($stateProvider) {
     
     $stateProvider
         .state('/', {
             url: '/',
-            /*templateUrl: 'components/searcher/searcher.tpl.html',
-            controller: 'SearcherCtrl'*/
             views: {
                 'searcher': {
                     templateUrl: 'components/searcher/searcher.tpl.html',
@@ -22,10 +19,19 @@ shopping
                     templateUrl: 'components/navbarCategory/navbarCategory.tpl.html',
                     controller: 'NavbarCategoryCtrl'
                 },
-                'productGrid': {
-                    templateUrl: 'components/productGrid/productGrid.tpl.html',
-                    controller: 'ProductGridCtrl'
+                'queryGrid': {
+                    templateUrl: 'components/queryGrid/queryGrid.tpl.html',
+                    controller: 'QueryGridCtrl'
                 }
+            }
+        })
+        .state('/actor', {
+            url: '/actor',
+            views: {
+                'actor': {
+                    templateUrl: 'components/actor/actor.tpl.html',
+                    controller: 'ActorCtrl'
+                },
             }
         });
     
