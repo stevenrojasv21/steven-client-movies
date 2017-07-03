@@ -2,7 +2,10 @@
   "name": "steven-api-client",
   "main": "index.html",
   "dependencies": {
-    "express": "4.13.3"
+    "express": "4.13.3",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-size": "^2.1.0",
+    "gulp-strip-debug": "^1.1.0"
   },
   "devDependencies": {
     "browser-sync": "^2.14.0",

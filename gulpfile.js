@@ -1,83 +1,105 @@
-var gulp    = require('gulp'),
-  minifycss   = require('gulp-minify-css'),
-  jshint      = require('gulp-jshint'),
-  stylish     = require('jshint-stylish'),
-  uglify      = require('gulp-uglify'),
-  usemin      = require('gulp-usemin'),
-  imagemin    = require('gulp-imagemin'),
-  rename      = require('gulp-rename'),
-  concat      = require('gulp-concat'),
-  notify      = require('gulp-notify'),
-  cache       = require('gulp-cache'),
-  changed     = require('gulp-changed'),
-  rev         = require('gulp-rev'),
-  browserSync = require('browser-sync'),
-  ngannotate  = require('gulp-ng-annotate'),
-  del         = require('del');
+var gulp = require('gulp'); // Require gulp
 
-  gulp.task('jshint', function() {
-  return gulp.src('app/scripts/**/*.js')
-  .pipe(jshint())
-  .pipe(jshint.reporter(stylish));
+// Sass dependencies
+//var sass = require('gulp-sass'); // Compile Sass into CSS
+var minifyCSS = require('gulp-minify-css'); // Minify the CSS
+
+// Minification dependencies
+var minifyHTML = require('gulp-minify-html'); // Minify HTML
+var concat = require('gulp-concat'); // Join all JS files together to save space
+var stripDebug = require('gulp-strip-debug'); // Remove debugging stuffs
+var uglify = require('gulp-uglify'); // Minify JavaScript
+var imagemin = require('gulp-imagemin'); // Minify images
+
+// Other dependencies
+var size = require('gulp-size'); // Get the size of the project
+var browserSync = require('browser-sync'); // Reload the browser on file changes
+var jshint = require('gulp-jshint'); // Debug JS files
+var stylish = require('jshint-stylish'); // More stylish debugging
+
+// Tasks -------------------------------------------------------------------- >
+
+// Task to compile Sass file into CSS, and minify CSS into build directory
+gulp.task('styles', function() {
+  gulp.src('./app/styles/*.css')
+    .pipe(concat('style.css'))
+    .pipe(minifyCSS())
+    .pipe(gulp.dest('./dist/styles'))
+    .pipe(browserSync.reload({
+      stream: true,
+    }));
 });
 
-// Clean
-gulp.task('clean', function() {
-    return del(['dist']);
+// Task to minify new or changed HTML pages
+gulp.task('html', function() {
+  gulp.src(['./app/*.html'])
+    .pipe(minifyHTML())
+    .pipe(gulp.dest('./dist'));
+
+  gulp.src(['./app/components/*.html', './app/components/**/*.html'])
+    .pipe(minifyHTML())
+    .pipe(gulp.dest('./dist/components'));
 });
 
-// Default task
-gulp.task('default', ['clean'], function() {
-    gulp.start('usemin', 'imagemin','copyfonts');
+// Task to concat, strip debugging and minify JS files
+gulp.task('scripts', function() {
+  gulp.src(
+        [
+            './app/componets/*.js', 
+            './app/componets/*.js',
+            './app/components/**/*.js'
+        ]
+    )
+    .pipe(concat('script.js'))
+    .pipe(stripDebug())
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/scripts/'));
 });
 
-gulp.task('usemin',['jshint'], function () {
-  return gulp.src('./app/**/*.html')
-      .pipe(usemin({
-        css:[minifycss(),rev()],
-        js: [ngannotate(),uglify(),rev()]
-      }))
-      .pipe(gulp.dest('dist/'));
+// Task to minify images into build
+gulp.task('images', function() {
+  gulp.src('./app/img/*')
+  .pipe(imagemin({
+    progressive: true,
+  }))
+  .pipe(gulp.dest('./dist/img'));
 });
 
-// Images
-gulp.task('imagemin', function() {
-  return del(['dist/images']), gulp.src('app/images/**/*')
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/images'))
-    .pipe(notify({ message: 'Images task complete' }));
+// Task to run JS hint
+gulp.task('jshint', function() {
+  gulp.src(['./app/components/*.js', './app/components/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('copyfonts', ['clean'], function() {    
-   gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
-    .pipe(gulp.dest('./dist/fonts'));
+// Task to get the size of the app project
+gulp.task('size', function() {
+  gulp.src('./app/**')
+  .pipe(size({
+    showFiles: true,
+  }));
 });
 
-// Watch
-gulp.task('watch', ['browser-sync'], function() {
-  // Watch .js files
-  gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
-  
-  // Watch image files
-  gulp.watch('app/images/**/*', ['imagemin']);
+// Task to get the size of the build project
+gulp.task('build-size', function() {
+  gulp.src('./dist/**')
+  .pipe(size({
+    showFiles: true,
+  }));
 });
 
-gulp.task('browser-sync', ['default'], function () {
-  var files = [
-    'app/**/*.html',
-    'app/styles/**/*.css',
-    'app/images/**/*.png',
-    'app/scripts/**/*.js',
-    'dist/**/*'
-  ];
-
-  browserSync.init(files, {
+// Serve application
+gulp.task('serve', ['styles', 'html', 'scripts', 'jshint', 'images', 'size'], function() {
+  /*browserSync.init({
     server: {
-      baseDir: "dist",
-      index: "index.html"
-    }
-  });
-  
-  // Watch any files in dist/, reload on change
-  gulp.watch(['dist/**']).on('change', browserSync.reload);
+      baseDir: 'app',
+    },
+  });*/
+});
+
+// Run all Gulp tasks and serve application
+gulp.task('default', ['serve', 'styles'], function() {
+  gulp.watch('app/styles/*.css', ['styles']);
+  gulp.watch('app/**', browserSync.reload);
+  //gulp.watch('app/scripts/**/*.js', browserSync.reload);
 });

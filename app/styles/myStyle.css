@@ -1,0 +1,50 @@
+body { 
+    padding-bottom: 70px; 
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-image: url(../img/bg1.jpg);    
+}
+
+.table > tbody > tr > td {
+    background-color: #f9f9f9 !important;
+}
+
+.navbar-default .navbar-brand, .panel-default .panel-heading {
+    color: #fff;
+}
+
+.navbar-default, .panel, .panel-heading {
+        background-color: rgba(56, 117, 189, 0.45) !important;
+        border-color: rgba(56, 117, 189, 0.45) !important;
+}
+
+.panel-body-result {
+    background-color: #FFFFFF;
+}
+
+.navbar-food {
+    background-color: rgba(253,98,80, 0.70) !important;
+    color: #ffffff !important;
+}
+
+.navbar-food-link {
+    color: #ffffff !important;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container-card {
+    padding: 2px 16px;
+}
