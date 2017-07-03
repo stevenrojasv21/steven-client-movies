@@ -17,7 +17,11 @@ mymovies
         return $resource(ROOT + "actors/:id", {
             id: "@id"
         }, {
-            	'query': { method: 'GET', url: ROOT + "actors/search" }
+                'query': { method: 'GET', url: ROOT + "actors/search" },
+                'movies': {
+                    url: ROOT + "actors/:id/movies",
+                    method: 'GET',
+                },
         });
     }
 ])
