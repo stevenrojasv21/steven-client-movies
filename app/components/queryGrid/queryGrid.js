@@ -28,7 +28,7 @@ function QueryGridCtrl($scope, $rootScope, $http, $q, $location, /*$b,*/ MultiSe
 {
     $scope.route = '';
     //This pagination can be an independent component
-    $scope.totalPages = 100;
+    $scope.totalPages = 1;
     $scope.pageSize = 20;
     $scope.currentPage = 1;
     $scope.shownPages = [];
@@ -63,6 +63,7 @@ function QueryGridCtrl($scope, $rootScope, $http, $q, $location, /*$b,*/ MultiSe
             function(data) {
                 $scope.rootScope = data.content;
                 $scope.totalPages = data.content.total_pages;
+                console.log('total', $scope.totalPages);
             },
             function (error) {
                 console.error(error);
