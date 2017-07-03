@@ -26,29 +26,43 @@ mymovies
 
 function QueryGridCtrl($scope, $rootScope, $http, $q, $location, /*$b,*/ MultiService, ActorService, MovieService)
 {
-    //angular.extend($scope, $b);
     $scope.route = '';
+    //This pagination can be an independent component
+    $scope.totalPages = 100;
+    $scope.pageSize = 20;
+    $scope.currentPage = 1;
+    $scope.shownPages = [];
 
-    $scope.search = function () {    
+    /*$scope.updatePaginate = function () {
+        var maxPages = 10;
+        $scope
+        for (var i = 0; i < maxPages; ++i) {
+            //$scope.shownPages.push(0);
+        }
+    }*/
+
+    $scope.search = function (page = 1) {    
+        $scope.currentPage = page;
+
         switch($scope.searchType) {
             case 'actor':
-                $scope.result = ActorService.query({'query': $scope.searchProduct }).$promise;
+                $scope.result = ActorService.query({'query': $scope.searchProduct, 'page': page}).$promise;
                 $scope.route = 'actor';
                 break;
             case 'movie':
-                $scope.result = MovieService.query({'query': $scope.searchProduct }).$promise;
+                $scope.result = MovieService.query({'query': $scope.searchProduct, 'page': page}).$promise;
                 $scope.route = 'movie';
                 break;
             default:
-                $scope.result = MultiService.query({'query': $scope.searchProduct }).$promise;
+                $scope.result = MultiService.query({'query': $scope.searchProduct, 'page': page}).$promise;
                 $scope.route = '';
                 break;        
         }
 
         $scope.result = $scope.result.then(
             function(data) {
-                console.log(data.content);
                 $scope.rootScope = data.content;
+                $scope.totalPages = data.content.total_pages;
             },
             function (error) {
                 console.error(error);
