@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="MyMovies">
+    <head>
+        <title>My Movies App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/myStyle.css"/>
+
+        <!-- endbuild -->
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#!/">My Movies App</a>
+                </div>               
+            </div>
+        </nav>
+        <div id="main">
+            <div ng-view>                
+            </div>
+        </div>
+        <!-- build:js scripts/main.js -->
+
+        <script src="../bower_components/angular/angular.min.js"></script>
+        <script src="../bower_components/angular-route/angular-route.min.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="../bower_components/angular-ui/build/angular-ui.min.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script src="../bower_components/angular-paging/dist/paging.js"></script>  
+        <script src="components/app.js"></script>    
+        <script src="components/model.js"></script>
+        <script src="components/queryGrid/queryGrid.js"></script>     
+        <script src="components/actor/actor.js"></script>
+        <script src="components/movie/movie.js"></script>
+        <script src="components/actor/actor-movies.js"></script>
+
+        <!-- endbuild -->
+    </body> 
+</html>

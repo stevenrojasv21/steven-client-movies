@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-2"> 
+        <div class="input-group">
+            <div class="input-group-addon">
+                <select ng-model="searchType" id="searchType" name="searchType">
+                    <option value="any" selected>Any</option>
+                    <option value="actor">Actor</option>
+                    <option value="movie">Movie</option>
+                </select>
+            </div>
+            <input type="text" ng-keypress="($event.which === 13)?search():0;" ng-model="searchProduct" id="search" name="search" class="form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="search();">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </span>
+        </div>
+    </div>    
+</div>
