@@ -8,7 +8,7 @@ mymovies
                     ,resolve: {
                         $b: ["$q", "$route", "MovieService",
                         function ($q, $route, MovieService) {
-                            var productPromise = {};
+                            var moviePromise = {};
                             if ($route.current.params.id) {
                                 moviePromise = MovieService.get($route.current.params).$promise;
                             }
