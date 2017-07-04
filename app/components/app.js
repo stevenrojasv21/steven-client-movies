@@ -1,6 +1,6 @@
 'use strict';
 
-var root = "http://api-movies.com/api/v1/";
+var root = "http://http://steven-api-movies.herokuapp.com/api/v1/";
 
 var mymovies = angular.module('MyMovies', ['ngRoute', 'ui.router', 'ngResource', "bw.paging"])
 .constant("ROOT", root)
