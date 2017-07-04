@@ -1,26 +1,29 @@
 mymovies
-.config(function ($routeProvider) {
-    $routeProvider
-        .when('/actor/:id?', {
-            templateUrl: 'components/actor/actor.tpl.html'            
-            ,resolve: {
-                $b: ["$q", "$route", "ActorService",
-                function ($q, $route, ActorService) {
-                    var productPromise = {};
-                    if ($route.current.params.id) {
-                        actorPromise = ActorService.get($route.current.params).$promise;
+.config([
+        '$routeProvider',
+        function ($routeProvider) {
+            $routeProvider
+                .when('/actor/:id?', {
+                    templateUrl: 'components/actor/actor.tpl.html'            
+                    ,resolve: {
+                        $b: ["$q", "$route", "ActorService",
+                        function ($q, $route, ActorService) {
+                            var productPromise = {};
+                            if ($route.current.params.id) {
+                                actorPromise = ActorService.get($route.current.params).$promise;
+                            }
+                            return $q.all({
+                                actor: actorPromise
+                            });
+                        }]
                     }
-                    return $q.all({
-                        actor: actorPromise
-                    });
-                }]
+                    ,controller: 'ActorCtrl'
+                })
+                .otherwise({
+                        //redirectTo: '/whatever'
+                });
             }
-            ,controller: 'ActorCtrl'
-        })
-        .otherwise({
-                //redirectTo: '/whatever'
-        });
-    }
+    ]
 )  
 .controller("ActorCtrl", ['$scope', '$rootScope', '$http', '$q', '$location','$b', 'ActorService', ActorCtrl]);
 

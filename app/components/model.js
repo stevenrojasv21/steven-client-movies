@@ -1,3 +1,5 @@
+'use strict';
+
 mymovies
 .factory("MovieService", [
     "$resource",
